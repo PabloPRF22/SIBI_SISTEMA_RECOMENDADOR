@@ -16,6 +16,7 @@ import { MenuItem, Snackbar } from "@mui/material";
 import background from "../Assets/background.jpg";
 import { style } from "@mui/system";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import AlertMassage from "../Components/AlertMassage";
 import axios from "axios";
 import Footer from "../Layouts/Footer";
@@ -71,6 +72,7 @@ const rangEdades = [
 const theme = createTheme();
 
 export default function SignUp() {
+  const navigate = useNavigate()
   const error = 1;
   const [alertInfo, setAlertInfo] = useState({
     severity: "success",
@@ -111,7 +113,9 @@ export default function SignUp() {
         var validate = response.data
         setAlertInfo({ severity: "success", open: true, message: validate.message });
         setInfoStatus(validate);
-
+        setTimeout(() => {
+          navigate('/login')
+        }, 5000)
 
       })
       .catch(function (error) {
@@ -222,7 +226,7 @@ export default function SignUp() {
                     fullWidth
                     name="password1"
                     label="Password"
-                    type="password1"
+                    type="password"
                     id="password1"
                     autoComplete="new-password"
                     error={infoStatus.password1}
@@ -237,7 +241,7 @@ export default function SignUp() {
                     fullWidth
                     name="password2"
                     label="Password"
-                    type="password2"
+                    type="password"
                     id="passwor2d"
                     autoComplete="new-password"
                     error={infoStatus.password2}
@@ -259,12 +263,12 @@ export default function SignUp() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign Up
+                Register
               </Button>
               <Grid container justifyContent="center">
                 <Grid item sx={{ textAlign: "center" }}>
                   <Link href="/login" variant="body2">
-                    Already have an account? Sign in
+                    ¿Ya tienes una cuenta? Logueate aqui
                   </Link>
                 </Grid>
               </Grid>

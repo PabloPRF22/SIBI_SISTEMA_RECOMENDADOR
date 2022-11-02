@@ -19,6 +19,7 @@ import axios from "axios";
 import Footer from "../Layouts/Footer";
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 
 let styles = {
   backgroundContainer: {
@@ -51,7 +52,10 @@ export default function SignIn() {
     message: "",
     open: false,
   });
+  
   const [error, setError] = useState(false);
+  const navigate = useNavigate()
+
   const [errorAlert, setErrorAlert] = useState({display:"none", message:""});
 
   const [data, setData] = useState({
@@ -80,7 +84,8 @@ export default function SignIn() {
           message: response.data.message,
         });
         setErrorAlert({...errorAlert,display: "none"})
-
+        window.localStorage.setItem("token", response.data.token);
+        navigate("/")
       })
       .catch(function (error) {
         setErrorAlert({display: "flex",message: error.response.data.message})
@@ -170,7 +175,7 @@ export default function SignIn() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign Up
+                Login
               </Button>
               <Grid container justifyContent="center">
                 <Grid item sx={{ textAlign: "center" }}>
