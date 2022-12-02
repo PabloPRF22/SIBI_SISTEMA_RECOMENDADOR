@@ -16,5 +16,5 @@ const app = express();
     console.log(`Example app listening on port ` );
 
     //app.use(express.json());
-  app.use(cors())
+
 });

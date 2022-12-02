@@ -3,7 +3,6 @@ const tokenService = require("../services/token");
 
 
 function isAuth(req, res, next) {
-  console.log("middle-ware isAuth")
   if (!req.headers.authorization) {
     return res.status(403).send({ message: "Porfavor logueate"  });
   } else {
