@@ -1,26 +1,16 @@
 <template>
-  <div :style = "{backgroundColor : '#e2e2e2'}">
+  <div :style="{ backgroundColor: '#e2e2e2' }">
     <NavBar></NavBar>
-    <v-toolbar :style = "{backgroundColor : '#e2e2e2'}" elevation = 0>
-      <v-switch
-        v-model="tableSwitch"
-        :style = "{position: 'absolute', right: 0}"
-        :label="`Tipo de visualización`"
-      ></v-switch>
+    <v-toolbar :style="{ backgroundColor: '#e2e2e2' }" elevation=0>
+      <v-switch v-model="tableSwitch" :style="{ position: 'absolute', right: 0 }"
+        :label="`Tipo de visualización`"></v-switch>
     </v-toolbar>
-    <AlojamientosTable
-      :alojamientos="alojamientosTable"
-      :show="tableSwitch"
-      :titulo = "'Listado de alojamientos populares'"
-    ></AlojamientosTable>
-    <Filtros @filter="filter" @resetFilter="resetFilter" :datos = "alojamientosRelacionadosTable" ></Filtros>
+    <AlojamientosTable :alojamientos="alojamientosTable" :show="tableSwitch"
+      :titulo="'Listado de alojamientos populares'"></AlojamientosTable>
+    <Filtros @filter="filter" @resetFilter="resetFilter" :datos="alojamientosRelacionadosTable"></Filtros>
 
-    <AlojamientosTable
-      :titulo = "'Listado de alojamientos relacionados'"
-
-      :alojamientos="alojamientosRelacionadosTable"
-      :show="tableSwitch"
-    ></AlojamientosTable>
+    <AlojamientosTable :titulo="'Listado de alojamientos relacionados'" :alojamientos="alojamientosRelacionadosTable"
+      :show="tableSwitch"></AlojamientosTable>
   </div>
 </template>
 
@@ -62,19 +52,27 @@ export default {
       .get("/bac/api/alojamiento/getMasPopulares", {})
       .then((response) => {
         this.alojamientosTable = response.data;
-        this.alojamientosTable.map((alojamiento) => {
-          axios
-            .post("/bac/api/alojamiento/getRelacionados", alojamiento)
-            .then(function (response2) {
-              response2.data.forEach((alojamiento) =>{
-                self.alojamientosRelacionadosTable.push(alojamiento)
+
+        this.alojamientosTable.map((alojamiento, index) => {
+          const color = index
+          alojamiento["color"] = color
+          if (color < 10) {
+            axios
+              .post("/bac/api/alojamiento/getRelacionados", alojamiento)
+              .then(function (response2) {
+                response2.data.forEach((alojamiento) => {
+                  alojamiento["color"] = color
+
+                  self.alojamientosRelacionadosTable.push(alojamiento)
+                })
               })
-            })
-            .catch(() => {
-            })
+              .catch(() => {
+              })
+          }
         });
+
       })
-      .catch(() => {});
+      .catch(() => { });
   },
 };
 </script>

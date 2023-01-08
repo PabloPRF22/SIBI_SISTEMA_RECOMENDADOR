@@ -4,7 +4,7 @@
     <v-card>
       <v-card-title> Informacion para la recomendacion </v-card-title>
       <v-card-text>
-        Elija sus preferencias
+        Elija sus preferences
         <v-row>
           <v-col class="column">
             <v-select
@@ -39,15 +39,15 @@
           </v-col>
           <v-col class="column">
             <v-select
-              v-model="garaje"
+              v-model="garajeAvailable"
               :items="['Disponible', 'No disponible']"
               label="Disponibilidad de garaje"
             ></v-select>
           </v-col>
           <v-col class="column" name="Columna2">
             <v-select
-              v-model="precioGaraje"
-              :disabled="garaje != 'Disponible'"
+              v-model="garajePrecio"
+              :disabled="garajeAvailable != 'Disponible'"
               :items="['Gratuito', 'De pago']"
               label="Precio de la plaza de garaje"
             ></v-select>
@@ -69,7 +69,7 @@
           :disabled="disabled"
           @click="establecerPreferencias"
         >
-          Establecer estas preferencias
+          Establecer estas preferences
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -93,12 +93,13 @@ export default {
       banios: null,
       ascensor: null,
       piso: null,
-      garaje: null,
-      precioGaraje: null,
+      garajeAvailable: null,
+      garajePrecio: null,
       userData: null,
       municipio: null,
       itemDistrito: [
-      "Centro","Chorrillo","Valdepelayo - Montepinos - Arroyo Culebro","Valleaguado - La Cañada","Suroeste","Ciudad Lineal","No disponible","Puente de Vallecas","San José - Buenos Aires","Hospital","Parque de la Coruña - Las Suertes","Valderas - Los Castillos","Barajas","Getafe Centro","San Blas","Villaverde","Reyes Católicos","Val","Casco Urbano","Casco Histórico","Latina","Los Llanos - Valle Pardo","Ensanche","El Vallejo","Pintores-Ferial","Carabanchel","Zona Estación- Centro","Tetuán","El Quiñón","Constitución-El Balconcillo","Zona Pueblo","Señorío de Illescas","Valdemorillo pueblo","Arganzuela","Fuencarral","Vicálvaro","La Estación","Centro de Especialidades","Nuevo Aranjuez-Ciudad de las Artes","Moncloa","Reyes","Sudeste Industrial","Rivas Futura","Juan de la Cierva","Hortaleza","Las Lomas-Salinera-La Muñeca","Fuentebella-San Felix-El Leguario","Villa de Vallecas","Ciudad 70","El Mirador","El Mirador - Grillero","La Espinilla - Parque Blanco","Retiro","Montserrat - Parque Empresarial","Juan de Austria","Zona Estación","Noroeste","La Montaña-El Cortijo","Chamartín","La Alhóndiga","San Isidro - Los Almendros","Centro Urbano","Buenavista","Universidad","Pryconsa - Poligono Europa","Villalba Estación","Parque Inlasa","San Roque-Concordia-Adoratrices","Centro - Casco Histórico","Las Sedas - El Olivar","Las Cañas","Chamberí","Parque Europa - Los Pitufos","San Isidro","Las Matas- Peñascales","Casco Antiguo","Barrio de Salamanca","El Espinar","Seseña Nuevo","Bulevar - Plaza Castilla","Espartales","El Nido-Las Fuentes","Villayuventus-Renfe","Las Américas","Parque - Ctra de Ugena","Los Ángeles de San Rafael","Foso-Moreras","Parque Roma - Coronas","Getafe norte","Vega de la Moraleja","Pol. Industrial sur","Parla Este","La Dehesa - El Pinar","Usera","Carlos Ruiz","San Crispín - La Estación Consorcio","Zona Industrial","Alcobendas Centro","Dehesa - El Soto"
+      "Madrid","Alcalá de Henares","Leganés","Coslada","Torrejón de Ardoz","Marchamalo","Alcorcón","Pinto","Pozo de Guadalajara","Valdemoro","Collado Villalba","Getafe","Paracuellos de Jarama","Villanueva del Pardillo","El Molar","Azuqueca de Henares","Parla","Tres Cantos","Seseña","Guadalajara","Campo Real","Pozuelo de Alarcón","Illescas","Valdemorillo","Alameda de la Sagra","Colmenarejo","Yuncos","Navalafuente","El Espinar","Villa del Prado","Ocaña","Aranjuez","Arganda","Fuensalida","Navalcarnero","Yuncler","Los Molinos","Fuenlabrada","Rivas-Vaciamadrid","Los Santos de la Humosa","Numancia de la Sagra","Sevilla la Nueva","Mocejón","Miraflores de la Sierra","Colmenar Viejo","Las Navas del Marqués","Pedrezuela","El Álamo","Yeles","San Fernando de Henares","Guadarrama","El Viso de San Juan","Loeches","Alovera","Robledo de Chavela","Casarrubios del Monte","Daganzo de Arriba","Villalbilla","Lominchar","San Sebastián de los Reyes","Mataelpino","Yebes","Santa Cruz del Retamar","Manzanares el Real","Calypo Fado","San Lorenzo de el Escorial","Aldea del Fresno","Chinchón","Algete","Bustarviejo","Las Rozas de Madrid","Galapagar","Villamanrique de Tajo","San Ildefonso o la Granja","Rascafría","Móstoles","Borox","Las Ventas de Retamosa","Recas","Valmojado","Serranillos del Valle","Villaseca de la Sagra","Cedillo del Condado","Esquivias","Camarena","El Escorial","El Casar","Torrelaguna","Cabañas de la Sagra","Camarma de Esteruelas","Meco","Alcobendas","Collado Mediano","Villaviciosa de Odón","Quijorna","Cobeña"
+
       ],
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -117,8 +118,8 @@ export default {
             banios: this.banios,
             ascensor: this.ascensor,
             piso: this.piso,
-            garaje: this.garaje,
-            precioGaraje: this.precioGaraje,
+            garajeAvailable: this.garajeAvailable,
+            garajePrecio: this.garajePrecio,
             municipio: this.municipio,
           },
           { headers: this.headers }
@@ -130,15 +131,15 @@ export default {
             banios: this.banios,
             ascensor: this.ascensor,
             piso: this.piso,
-            garaje: this.garaje,
-            precioGaraje: this.precioGaraje,
+            garajeAvailable: this.garajeAvailable,
+            garajePrecio: this.garajePrecio,
             municipio: this.municipio,
           });
         });
     },
   },
   computed: {
-    ...mapGetters(["currentUser", "loading", "preferencias"]),
+    ...mapGetters(["currentUser", "loading", "preferences"]),
 
     disabled() {
       return (
@@ -146,13 +147,18 @@ export default {
         this.banios == null ||
         this.ascensor == null ||
         this.piso == null ||
-        this.garaje == null ||
-        (this.garaje == "Disponible" && this.precioGaraje == null) ||
+        this.garajeAvailable == null ||
+        (this.garajeAvailable == "Disponible" && this.garajePrecio == null) ||
         this.municipio == null
       );
     },
   },
   watch: {
+    garajeAvailable(newVal){
+      if(newVal && newVal == "No disponible"){
+        this.garajePrecio = null
+      }
+    },
     loading(val) {
       if (!val) {
         if (this.currentUser) {
@@ -162,27 +168,28 @@ export default {
         }
       }
     },
-    preferencias(preferencias) {
-      if (preferencias) {
-        this.habitaciones = preferencias.habitaciones;
-        this.banios = preferencias.banios;
-        this.ascensor = preferencias.ascensor;
-        this.piso = preferencias.piso;
-        this.garaje = preferencias.garaje;
-        this.precioGaraje = preferencias.precioGaraje;
-        this.municipio = preferencias.municipio;
+    preferences(preferences) {
+      if (preferences) {
+        console.log(preferences)
+        this.habitaciones = preferences.habitaciones;
+        this.banios = preferences.banios;
+        this.ascensor = preferences.ascensor ? "Disponible" : "No disponible";
+        this.piso = preferences.piso;
+        this.garajeAvailable = preferences.garajeAvailable ? "Disponible" : "No disponible";
+        this.garajePrecio = preferences.garajePrecio;
+        this.municipio = preferences.municipio;
       }
     },
   },
   mounted() {
-    if (this.preferencias) {
-      this.habitaciones = this.preferencias.habitaciones;
-      this.banios = this.preferencias.banios;
-      this.ascensor = this.preferencias.ascensor;
-      this.piso = this.preferencias.piso;
-      this.garaje = this.preferencias.garaje;
-      this.precioGaraje = this.preferencias.precioGaraje;
-      this.municipio = this.preferencias.municipio;
+    if (this.preferences) {
+      this.habitaciones = this.preferences.habitaciones;
+      this.banios = this.preferences.banios;
+      this.ascensor = this.preferences.ascensor;
+      this.piso = this.preferences.piso;
+      this.garajeAvailable = this.preferences.garajeAvailable;
+      this.garajePrecio = this.preferences.garajePrecio;
+      this.municipio = this.preferences.municipio;
     }
   },
 };

@@ -16,7 +16,7 @@
           <v-col>
             <v-img
               height="400"
-              src="https://img3.idealista.com/blur/WEB_LISTING/0/id.pro.es.image.master/56/73/61/1013600904.jpg"
+              :src="alojamiento.thumbnail"
             >
             </v-img>
           </v-col>

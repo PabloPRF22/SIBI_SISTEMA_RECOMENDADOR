@@ -8,13 +8,17 @@ export default new Vuex.Store({
   state: {
     logged :false,
     currentUser: null,
-    alojamientos: null
+    alojamientos: null,
+    preferences: null,
+    loading: true
 
   },
   getters: {
+    loading: (state) => state.loading,
     logged: (state) => state.logged,
     currentUser: (state) => state.currentUser,
     alojamientos: (state) => state.alojamientos,
+    preferences: (state) => state.preferences,
 
 
   },
@@ -30,6 +34,12 @@ export default new Vuex.Store({
       state.logged =true
       state.currentUser = data;
     },
+    setPreferences(state,data){
+      state.preferences = data
+    },
+    setLoading(state,data){
+      state.loading = data
+    }
   },
   actions: {
     changeStateLoggedction(context) {
@@ -37,6 +47,14 @@ export default new Vuex.Store({
     },
     setCurrentUserAction(context, data) {
       context.commit("setCurrentUser", data);
+    },
+    setPreferenciasAction(context,data){
+      context.commit("setPreferences", data);
+
+    },
+    setLoadingAction(context,data){
+      context.commit("setLoading", data);
+
     },
     initApp: ({ commit }) => {
       axios
@@ -57,6 +75,18 @@ export default new Vuex.Store({
       .catch(()=>{
 
       })
+      axios
+      .get("/bac/api/usuario/preferences", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        commit("setPreferences", response.data.preferences);
+      })
+      commit("setLoading", false);
+
+      
     },
   },
   modules: {

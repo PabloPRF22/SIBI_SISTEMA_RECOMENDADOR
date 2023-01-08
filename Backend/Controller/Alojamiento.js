@@ -22,6 +22,14 @@ function getAll(req, res) {
   }); 
  
 }
+function getAlojamientosBaratos(req, res) {
+  alojModel.getAlojamientosBaratos().then((resultado) => {
+    return res.status(200).send(resultado)
+  }).catch((error) =>{
+    return res.status(500).send(error)
+  }); 
+ 
+}
 async function getMasPopulares(req, res) {
   alojModel.getNLikeofHosts().then((resultado) => {
     return res.status(200).send(resultado)
@@ -37,4 +45,4 @@ async function getRelacionados(req, res) {
     return res.status(500).send(error)
   }); 
 }
-module.exports = { getAll, getFiltered, getMasPopulares ,getRelacionados};
+module.exports = { getAll, getFiltered, getMasPopulares ,getRelacionados,getAlojamientosBaratos};

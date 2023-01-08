@@ -4,8 +4,11 @@ import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView";
 import RegisterView from "../views/RegisterView";
 import AlojamientoView from "../views/AlojamientoView";
+import AlojamientosBaratosView from "../views/AlojamientosBaratosView"
 import PopularesView from '../views/PopularesView'
 import RecomendacionView from '../views/RecomendacionView'
+import RecomendacionPersonalizadaView from '../views/RecomendacionPersonalizadaView'
+import PerfilView from '../views/PerfilView'
 import axios from "axios";
 import store from '@/store'
 Vue.use(VueRouter);
@@ -40,6 +43,21 @@ const routes = [
     path: "/recomendacion",
     name: "Recomendacion",
     component: RecomendacionView,
+  },
+  {
+    path: "/recomendacionPersonalizada",
+    name: "RecomendacionPersonalizada",
+    component: RecomendacionPersonalizadaView,
+  },
+  {
+    path: "/alojamientosBaratos",
+    name: "AlojamientosBaratos",
+    component: AlojamientosBaratosView,
+  },
+  {
+    path: "/perfil",
+    name: "Perfil",
+    component: PerfilView,
   },
   {
     path: "/about",

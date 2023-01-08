@@ -4,6 +4,8 @@ const alojCtrl = require('../Controller/Alojamiento')
 
 
 router.get('/getAll', alojCtrl.getAll)
+router.get('/getBaratos', alojCtrl.getAlojamientosBaratos)
+
 router.get('/getFiltered', alojCtrl.getFiltered)
 router.get('/getMasPopulares', alojCtrl.getMasPopulares)
 router.post('/getRelacionados', alojCtrl.getRelacionados)

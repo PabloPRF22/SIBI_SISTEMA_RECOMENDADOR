@@ -9,7 +9,7 @@
       ></v-switch>
     </v-toolbar>
     <Filtros @filter="filter" @resetFilter="resetFilter" :datos = "alojamientosTable"></Filtros>
-    <AlojamientosTable :alojamientos="alojamientosTable" :show = "tableSwitch" :titulo = "'Alojamientos baratos'"></AlojamientosTable>
+    <AlojamientosTable :alojamientos="alojamientosTable" :show = "tableSwitch" :titulo = "'Listado de alojamientos baratos'"></AlojamientosTable>
   </div>
 </template>
 
@@ -48,11 +48,14 @@ export default {
       this.alojamientosTable = this.alojamientosSinFiltrar;
     },
     getBaratos(){
-      axios.get("/bac/api/alojamiento/baratos", {
+      axios.get("/bac/api/alojamiento/getBaratos", {
       })
       .then((result)=>{
-        console.log(result.data)
-        this.alojamientosTable = result.data.alojamientos
+
+
+        this.alojamientosTable = result.data
+
+
       })
     }
   },

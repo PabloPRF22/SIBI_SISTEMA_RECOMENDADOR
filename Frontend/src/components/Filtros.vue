@@ -94,10 +94,6 @@ export default {
   },
   watch: {
     datos(alojamientos) {
-      console.log("********")
-
-      console.log(alojamientos)
-      console.log("********")
       if (alojamientos) {
         this.filteredAlojamientos = alojamientos;
       }
@@ -107,11 +103,9 @@ export default {
   methods: {
     filterHabitaciones(value) {
       let filtro = this.filteredAlojamientos.filter(function (alojamiento) {
-        console.log(alojamiento.rooms + '  '+ value + ' '+  alojamiento.rooms >= value)
         return alojamiento.rooms >= value;
       });
       this.filteredAlojamientos = filtro;
-      console.log(this.filteredAlojamientos)
     },
     filterBanios(value) {
       let filtro = this.filteredAlojamientos.filter(function (alojamiento) {
@@ -154,6 +148,7 @@ export default {
       this.filteredAlojamientos = filtro;
     },
     submit() {
+      console.log(this.filteredAlojamientos)
       this.filtered = true;
       this.$emit("filter", this.filteredAlojamientos);
     },
