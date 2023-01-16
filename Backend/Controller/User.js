@@ -288,6 +288,19 @@ function isAuth(req, res) {
 function alojamientosRelatedUsers(req, res) {
     let currentUser = req.body.currentUser
     const session = driver.session()
+    console.log("MATCH (u:User) WITH u, " +
+    "collect(CASE u.estadoCivil WHEN '" + currentUser.estadoCivil + "' THEN 3 ELSE 2 END) as estadoCivil," +
+    "collect(CASE u.rangoEdades WHEN '" + currentUser.rangoEdad + "' THEN 5 ELSE 3 END) as edad," +
+    "collect(CASE u.ocupacion WHEN '" + currentUser.ocupacion + "' THEN 7 ELSE 0 END) as ocupacion," +
+    "collect(CASE u.hijos WHEN " + currentUser.hijos + " THEN 5 ELSE 0 END) as hijos, " +
+    "collect(CASE u.distrito WHEN '" + currentUser.distrito + "' THEN 10 ELSE 0 END) as distrito " +
+    "with u,  gds.similarity.cosine([3,5,7,5,10], estadoCivil+edad+ocupacion+hijos+distrito) as cosineSimilarity " +
+    "WHERE cosineSimilarity >= 0.70 AND cosineSimilarity<1.0 WITH u MATCH (u:User)-[:LIKE]->(a:Host),(a)-[:IS]->(t:Type)," +
+    "(a)-[:HAS_PARKINGSPACE]->(p:ParkingSpace), (a)-[:HAS_NUM_ROOMS]->(r:Rooms), " +
+    "(a)-[:HAS_NUM_BATHROOMS]->(b:Bathrooms) " +
+    "return a.propertyCode, a.thumbnail, a.numPhotos, a.price, t.propertyType, a.operation, a.size," +
+    "a.exterior, r.num, b.num, a.address, a.province, a.municipality, a.url, a.description, a.status," +
+    "a.priceByArea,a.detailedType,a.floor,a.district,a.neighborhood,a.hasLift,p.available,p.price,a.suggestedTexts,ID(a)")
     //console.log("MATCH (u:User) WITH u, collect(CASE u.estadoCivil WHEN '"+currentUser.estadoCivil+"' THEN 3 ELSE 0 END) as estadoCivil, collect(CASE u.rangoEdades WHEN '"+currentUser.rangoEdad+"' THEN 5 ELSE 0 END) as edad, collect(CASE u.ocupacion WHEN '"+currentUser.ocupacion+"' THEN 5 ELSE 2 END) as ocupacion, collect(CASE u.hijos WHEN "+currentUser.hijos+" THEN 4 ELSE 0 END) as hijos, collect(CASE u.distrito WHEN '"+currentUser.distrito+"' THEN 10 ELSE 0 END) as distrito with u,  gds.similarity.cosine([3,5,5,4,10], estadoCivil+edad+ocupacion+hijos+distrito) as cosineSimilarity WHERE cosineSimilarity >= 0.94 WITH u MATCH (u:User)-[:LIKE]->(a:Host),(a)-[:IS]->(t:Type),(a)-[:HAS_PARKINGSPACE]->(p:ParkingSpace), (a)-[:HAS_NUM_ROOMS]->(r:Rooms), (a)-[:HAS_NUM_BATHROOMS]->(b:Bathrooms) return a.propertyCode, a.thumbnail, a.numPhotos, a.price, t.propertyType, a.operation, a.size, a.exterior, r.num, b.num, a.address, a.province, a.municipality, a.url, a.description, a.status, a.priceByArea,a.detailedType,a.floor,a.district,a.neighborhood,a.hasLift,p.available,p.price,a.suggestedTexts,ID(a)")
     session.run("MATCH (u:User) WITH u, " +
         "collect(CASE u.estadoCivil WHEN '" + currentUser.estadoCivil + "' THEN 3 ELSE 2 END) as estadoCivil," +
